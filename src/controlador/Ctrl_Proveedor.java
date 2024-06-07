@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Este archivo está sujeto a los términos y condiciones del contrato de licencia incluido en el software que lo acompaña.
  */
 package controlador;
 
@@ -13,11 +12,20 @@ import java.sql.Statement;
 import modelo.Proveedor;
 
 /**
- *
- * @author ESTIMADO USUARIO
+ * Clase que controla las operaciones relacionadas con los proveedores en la base de datos.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class Ctrl_Proveedor {
-        public boolean guardar(Proveedor objeto){
+    
+    /**
+     * Método para guardar un proveedor en la base de datos.
+     * 
+     * @param objeto El objeto Proveedor a guardar.
+     * @return true si el proveedor se guarda correctamente, false en caso contrario.
+     */
+    public boolean guardar(Proveedor objeto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         
@@ -40,6 +48,12 @@ public class Ctrl_Proveedor {
         return respuesta;
     }
     
+    /**
+     * Método para verificar si un proveedor ya existe en la base de datos.
+     * 
+     * @param proveedor El nombre del proveedor a verificar.
+     * @return true si el proveedor existe, false en caso contrario.
+     */
     public boolean existeProveedor(String proveedor){
         boolean respuesta = false;
         String sql = "select empresa from proveedores where empresa = '" + proveedor + "';";
@@ -57,6 +71,14 @@ public class Ctrl_Proveedor {
         }
         return respuesta;
     }
+    
+    /**
+     * Método para actualizar un proveedor en la base de datos.
+     * 
+     * @param objeto El objeto Proveedor con los datos actualizados.
+     * @param idproveedor El ID del proveedor a actualizar.
+     * @return true si la actualización se realiza correctamente, false en caso contrario.
+     */
     public boolean actualizar(Proveedor objeto, int idproveedor){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();

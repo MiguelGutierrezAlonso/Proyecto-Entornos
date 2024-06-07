@@ -10,19 +10,25 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
  
 /**
-*
-* @author Miguelín
-*/
+ * La clase Conexion proporciona un método para establecer una conexión con una base de datos MySQL.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
+ */
 public class Conexion {
  
-    //conexion local
+    /**
+     * Establece una conexión con la base de datos MySQL especificada.
+     * 
+     * @return una conexión a la base de datos, o {@code null} si ocurre un error
+     */
     public static Connection conectar() {
         try {
             String mydb = "jdbc:mysql://localhost:3306/Carniceria?serverTimezone=UTC&useSSL=false";
             Connection cn = DriverManager.getConnection(mydb, "root", "DAW123");
             return cn;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error with the database" + e);
+            JOptionPane.showMessageDialog(null, "Error con la base de datos: " + e);
         }
         return null;
     }

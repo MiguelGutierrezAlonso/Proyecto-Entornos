@@ -26,33 +26,79 @@ import modelo.CabeceraVenta;
 import modelo.DetalleVenta;
 
 /**
+ * Interfaz gráfica para realizar una nueva orden de venta. Esta clase permite
+ * al usuario seleccionar clientes, agregar productos y realizar operaciones de
+ * venta.
  *
- * @author ESTIMADO USUARIO
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterFactura extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form InterFactura
+     * Modelo de tabla para mostrar los productos seleccionados.
      */
     private DefaultTableModel modeloDatosProductos;
 
+    /**
+     * Lista de productos seleccionados para la venta.
+     */
     ArrayList<DetalleVenta> listaProductos = new ArrayList<>();
+
+    /**
+     * Producto actual seleccionado.
+     */
     private DetalleVenta producto;
 
+    /**
+     * Identificador del cliente seleccionado.
+     */
     private int idCliente = 0;
 
+    /**
+     * Identificador del producto seleccionado.
+     */
     private int idProducto = 0;
+
+    /**
+     * Nombre del producto seleccionado.
+     */
     private String nombre = "";
+
+    /**
+     * Cantidad de existencias del producto en la base de datos.
+     */
     private int cantidadProductoBBDD = 0;
+
+    /**
+     * Precio unitario del producto seleccionado.
+     */
     private double precioUnitario = 0;
 
+    /**
+     * Cantidad de unidades del producto a vender.
+     */
     private int cantidad = 0;
+
+    /**
+     * Total a pagar por la venta actual.
+     */
     private double totalPagar = 0;
 
+    /**
+     * Total a pagar por todas las ventas.
+     */
     private double totalPagarGeneral = 0;
 
+    /**
+     * Identificador auxiliar para los detalles de venta.
+     */
     private int auxIdDetalle = 1;
 
+    /**
+     * Constructor de la clase InterFactura. Inicializa la interfaz gráfica y
+     * carga los datos iniciales.
+     */
     public InterFactura() {
         initComponents();
         this.setTitle("New Order");
@@ -69,6 +115,9 @@ public class InterFactura extends javax.swing.JInternalFrame {
 
     }
 
+    /**
+     * Inicializa el modelo de la tabla de productos.
+     */
     private void inicializarTablaProducto() {
         modeloDatosProductos = new DefaultTableModel();
         modeloDatosProductos.addColumn("Nª");
@@ -81,6 +130,9 @@ public class InterFactura extends javax.swing.JInternalFrame {
         this.FTabla.setModel(modeloDatosProductos);
     }
 
+    /**
+     * Actualiza la tabla de productos con la lista actualizada.
+     */
     private void listaTablaProductos() {
         this.modeloDatosProductos.setRowCount(listaProductos.size());
         for (int i = 0; i < listaProductos.size(); i++) {
@@ -237,6 +289,14 @@ public class InterFactura extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_FPrecioTotalActionPerformed
 
+    /**
+     * Realiza la búsqueda del cliente en la base de datos a partir del ID
+     * proporcionado en el campo de texto. Si se encuentra el cliente, actualiza
+     * el combo de clientes seleccionados. Si no se encuentra el cliente,
+     * muestra un mensaje de advertencia.
+     *
+     * @param evt Evento de acción que desencadena la búsqueda del cliente.
+     */
     private void BuscaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaClienteActionPerformed
 
         try {
@@ -268,6 +328,14 @@ public class InterFactura extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_BuscaClienteActionPerformed
 
+    /**
+     * Agrega la cantidad especificada del producto seleccionado a la lista de
+     * productos de la venta. Verifica la disponibilidad en stock antes de
+     * agregar el producto. Actualiza la tabla de productos y el total a pagar.
+     *
+     * @param evt Evento de acción que desencadena la adición de cantidad de
+     * producto.
+     */
     private void AnadeCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadeCantidadActionPerformed
         String combo = this.FProductoD.getSelectedItem().toString();
 
@@ -318,6 +386,13 @@ public class InterFactura extends javax.swing.JInternalFrame {
         this.listaTablaProductos();
     }//GEN-LAST:event_AnadeCantidadActionPerformed
 
+    /**
+     * Calcula el cambio a devolver al cliente según el monto pagado y el total
+     * a pagar. Muestra un mensaje de advertencia si el monto pagado es
+     * insuficiente.
+     *
+     * @param evt Evento de acción que desencadena el cálculo del cambio.
+     */
     private void CalcularCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularCambioActionPerformed
         if (!FPagado.getText().isEmpty()) {
             boolean validacion = validarDouble(FPagado.getText());
@@ -341,7 +416,16 @@ public class InterFactura extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Fill the field of paid ammount");
         }
     }//GEN-LAST:event_CalcularCambioActionPerformed
+
     int idArrayList = 0;
+
+    /**
+     * Maneja el evento de clic en la tabla de productos. Permite eliminar un
+     * producto de la lista de productos de la venta. Actualiza la tabla de
+     * productos y el total a pagar.
+     *
+     * @param evt Evento de clic en la tabla de productos.
+     */
     private void FTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FTablaMouseClicked
         int fila_point = FTabla.rowAtPoint(evt.getPoint());
         int columna_point = 0;
@@ -363,6 +447,15 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_FTablaMouseClicked
 
+    /**
+     * Guarda la orden de venta en la base de datos junto con los detalles de la
+     * venta. Genera una factura en formato PDF. Actualiza el stock de productos
+     * en la base de datos. Reinicia los campos y la lista de productos para una
+     * nueva venta.
+     *
+     * @param evt Evento de acción que desencadena el guardado de la orden de
+     * venta.
+     */
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
 
         CabeceraVenta cabeceraVenta = new CabeceraVenta();
@@ -451,6 +544,10 @@ public class InterFactura extends javax.swing.JInternalFrame {
     public static javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Carga la lista de clientes desde la base de datos y la muestra en el
+     * combo de clientes.
+     */
     private void CargarComboClientes() {
         Connection cn = Conexion.conectar();
         String sql = "select * from clientes";
@@ -471,6 +568,10 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Carga la lista de productos desde la base de datos y la muestra en el
+     * combo de productos.
+     */
     private void CargarComboProductos() {
         Connection cn = Conexion.conectar();
         String sql = "select * from productos";
@@ -490,6 +591,13 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Valida si el valor especificado es un número entero válido.
+     *
+     * @param valor Valor a validar.
+     * @return true si el valor es un número entero válido, false de lo
+     * contrario.
+     */
     private boolean validar(String valor) {
         try {
             int num = Integer.parseInt(valor);
@@ -499,6 +607,13 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Valida si el valor especificado es un número decimal válido.
+     *
+     * @param valor Valor a validar.
+     * @return true si el valor es un número decimal válido, false de lo
+     * contrario.
+     */
     private boolean validarDouble(String valor) {
         try {
             double num = Double.parseDouble(valor);
@@ -508,6 +623,10 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Obtiene los detalles del producto seleccionado de la base de datos y los
+     * almacena en variables locales.
+     */
     private void DatosDelProducto() {
         try {
             String sql = "select * from productos where nombre = '" + this.FProductoD.getSelectedItem() + "'";
@@ -527,6 +646,10 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Calcula el total a pagar por la venta actual sumando los precios totales
+     * de todos los productos. Actualiza el campo de precio total.
+     */
     private void CalcularTotalPagar() {
         totalPagarGeneral = 0;
 
@@ -539,6 +662,9 @@ public class InterFactura extends javax.swing.JInternalFrame {
         FPrecioTotal.setText(String.valueOf(totalPagarGeneral));
     }
 
+    /**
+     * Obtiene el identificador del cliente seleccionado del combo de clientes.
+     */
     private void ObtenerIdCliente() {
         try {
             String sql = "select * from clientes where concat(nombre, ' ', apellido) = '" + this.FClienteD.getSelectedItem() + "'";
@@ -554,6 +680,13 @@ public class InterFactura extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Resta la cantidad especificada del stock del producto en la base de
+     * datos.
+     *
+     * @param idProducto Identificador del producto.
+     * @param cantidad Cantidad a restar del stock.
+     */
     private void RestarStockProductos(int idProducto, int cantidad) {
         int cantidadProductosBBDD = 0;
         try {

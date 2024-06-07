@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Este archivo está sujeto a los términos y condiciones del contrato de licencia incluido en el software que lo acompaña.
  */
 package controlador;
 
@@ -16,11 +15,19 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ESTIMADO USUARIO
+ * Clase que controla las operaciones relacionadas con los usuarios en la base de datos.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class Ctrl_Usuario {
 
+    /**
+     * Método para autenticar un usuario.
+     * 
+     * @param objeto El objeto Usuario que contiene el nombre de usuario y la contraseña a autenticar.
+     * @return true si la autenticación es exitosa, false en caso contrario.
+     */
     public boolean loginUser(Usuario objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -42,6 +49,12 @@ public class Ctrl_Usuario {
         return respuesta;
     }
 
+    /**
+     * Método para guardar un usuario en la base de datos.
+     * 
+     * @param objeto El objeto Usuario a guardar.
+     * @return true si el usuario se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(Usuario objeto) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -72,6 +85,12 @@ public class Ctrl_Usuario {
         return respuesta;
     }
 
+    /**
+     * Método para verificar si un cliente ya existe en la base de datos.
+     * 
+     * @param usuario El nombre de usuario a verificar.
+     * @return true si el usuario existe, false en caso contrario.
+     */
     public boolean existeCliente(String usuario) {
         boolean respuesta = false;
         String sql = "select NIdentidad from clientes where NIdentidad = '" + usuario + "';";
@@ -90,6 +109,13 @@ public class Ctrl_Usuario {
         return respuesta;
     }
 
+    /**
+     * Método para actualizar un usuario en la base de datos.
+     * 
+     * @param objeto El objeto Usuario con los datos actualizados.
+     * @param idusuario El ID del usuario a actualizar.
+     * @return true si la actualización se realiza correctamente, false en caso contrario.
+     */
     public boolean actualizar(Usuario objeto, int idusuario) {
     boolean respuesta = false;
     Connection cn = Conexion.conectar();
@@ -144,6 +170,12 @@ public class Ctrl_Usuario {
 }
 
 
+    /**
+     * Método para eliminar un usuario de la base de datos.
+     * 
+     * @param idusuario El ID del usuario a eliminar.
+     * @return true si el usuario se elimina correctamente, false en caso contrario.
+     */
     public boolean eliminar(int idusuario) {
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -164,6 +196,12 @@ public class Ctrl_Usuario {
         return respuesta;
     }
 
+    /**
+     * Método para obtener el rol de un usuario.
+     * 
+     * @param usuario El objeto Usuario del cual se obtendrá el rol.
+     * @return El rol del usuario ("Admin" o "User").
+     */
     public String obtenerRolUsuario(Usuario usuario) {
         String rol = "";
         Connection cn = Conexion.conectar();
@@ -183,6 +221,12 @@ public class Ctrl_Usuario {
         return rol;
     }
 
+    /**
+     * Método para encriptar una contraseña utilizando el algoritmo SHA-256.
+     * 
+     * @param password La contraseña a encriptar.
+     * @return La contraseña encriptada.
+     */
     public String Encriptar(String password) {
         try {
             // Crear un objeto MessageDigest para SHA-256
@@ -207,9 +251,17 @@ public class Ctrl_Usuario {
         }
     }
 
+    /**
+     * Método para autenticar una contraseña proporcionada con una contraseña almacenada (ya encriptada) en la base de datos.
+     * 
+     * @param inputPassword La contraseña proporcionada por el usuario.
+     * @param hashedPassword La contraseña almacenada (ya encriptada) en la base de datos.
+     * @return true si las contraseñas coinciden, false en caso contrario.
+     */
     public boolean authenticatePassword(String inputPassword, String hashedPassword) {
-            String hash = Encriptar(inputPassword);
-            return hash.equals(hashedPassword);
+        String hash = Encriptar(inputPassword);
+        return hash.equals(hashedPassword);
     }
 
 }
+

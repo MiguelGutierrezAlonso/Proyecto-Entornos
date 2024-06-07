@@ -22,8 +22,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author ESTIMADO USUARIO
+ * Esta clase proporciona una interfaz para la gestión de productos.
+ * Permite la visualización, actualización, eliminación y búsqueda de productos en una base de datos.
+ * El usuario puede interactuar con la interfaz para realizar estas operaciones.
+ * La clase se encarga de la interacción con la base de datos y la actualización de la interfaz gráfica.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterGestProducto extends javax.swing.JInternalFrame {
 
@@ -33,6 +38,11 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
     private int ID_Producto;
     int obtenerProveedor = 0;
 
+    /**
+     * Crea una nueva instancia de la interfaz de gestión de productos.
+     * Inicializa la interfaz gráfica y establece el tamaño, título y color de
+     * fondo.
+     */
     public InterGestProducto() {
         initComponents();
         this.setSize(new Dimension(800, 370));
@@ -173,7 +183,13 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Actualiza la información de un producto en la base de datos.
+     * Comprueba que todos los campos estén completos y válidos antes de realizar la actualización.
+     * Si la actualización es exitosa, limpia los campos y actualiza la tabla de productos.
+     * 
+     * @param evt El evento que desencadena la acción de actualización.
+     */
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
 
         // Verificar si el nombre del producto no está vacío
@@ -247,6 +263,13 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_UpdateActionPerformed
 
+    /**
+     * Elimina un producto de la base de datos.
+     * Verifica si se ha seleccionado un producto antes de eliminarlo.
+     * Si la eliminación es exitosa, limpia los campos y actualiza la tabla de productos.
+     * 
+     * @param evt El evento que desencadena la acción de eliminación.
+     */
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         if (!PNombre.getText().isEmpty()) {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
@@ -280,6 +303,12 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_DeleteActionPerformed
 
+    /**
+     * Busca un producto en la base de datos por su nombre.
+     * Muestra los detalles del producto si se encuentra.
+     * 
+     * @param evt El evento que desencadena la acción de búsqueda.
+     */
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         String identityNumber = PNombre.getText();
         if (!identityNumber.isEmpty()) {
@@ -319,6 +348,10 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
     double pv = 0;
     String categoria = "";
 
+    /**
+     * Carga la tabla de productos con los datos de la base de datos.
+     * Permite la visualización de los productos disponibles.
+     */
     private void CargarTablaProductos() {
         Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
@@ -370,6 +403,11 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         });
     }
 
+    /**
+     * Envía los datos del producto seleccionado a los campos correspondientes en la interfaz.
+     * 
+     * @param idproducto El ID del producto seleccionado.
+     */
     private void EnviarDatosProductoSeleccionado(int idproducto) {
         try {
             Connection con = Conexion.conectar();
@@ -393,6 +431,12 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Busca el nombre de un proveedor en la base de datos por su ID.
+     * 
+     * @param idProveedor El ID del proveedor.
+     * @return El nombre del proveedor.
+     */
     private String buscarNombreProveedor(int idProveedor) {
         String nombreProveedor = "";
         String sql = "SELECT empresa FROM proveedores WHERE id_proveedor = ?";
@@ -411,6 +455,12 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         return nombreProveedor;
     }
 
+    /**
+     * Relaciona un ID de proveedor con el nombre de la empresa.
+     * 
+     * @param idProveedor El ID del proveedor.
+     * @return El nombre de la empresa del proveedor.
+     */
     private String relacionarProveedor(int idProveedor) {
         String empresaProveedor = "";
         String sql = "SELECT empresa FROM proveedores WHERE id_proveedor = ?";
@@ -429,6 +479,9 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         return empresaProveedor;
     }
 
+    /**
+     * Carga la lista desplegable de proveedores con los datos de la base de datos.
+     */
     private void CargarProveedor() {
         Connection cn = Conexion.conectar();
         String sql = "select * from proveedores";
@@ -449,12 +502,23 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Obtiene el ID del proveedor seleccionado en la lista desplegable.
+     * 
+     * @return El ID del proveedor seleccionado.
+     */
     private int obtenerIdProveedorSeleccionado() {
         String empresaProveedor = PProveedor.getSelectedItem().toString();
         int idProveedor = obtenerIdProveedorDesdeBaseDeDatos(empresaProveedor);
         return idProveedor;
     }
 
+    /**
+     * Obtiene el ID del proveedor desde la base de datos utilizando el nombre de la empresa.
+     * 
+     * @param empresaProveedor El nombre de la empresa del proveedor.
+     * @return El ID del proveedor.
+     */
     private int obtenerIdProveedorDesdeBaseDeDatos(String empresaProveedor) {
 
         int idProveedor = 0;
@@ -473,6 +537,11 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         return idProveedor;
     }
 
+    /**
+     * Envía los datos del producto seleccionado por su nombre a los campos correspondientes en la interfaz.
+     * 
+     * @param idproducto El nombre del producto seleccionado.
+     */
     private void EnviarDatosNombreMarcado(String idproducto) {
         try {
             Connection con = Conexion.conectar();
@@ -498,6 +567,9 @@ public class InterGestProducto extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Limpia todos los campos de la interfaz.
+     */
     private void LimpiarCampos() {
         PNombre.setText("");
         PCantidad.setText("");

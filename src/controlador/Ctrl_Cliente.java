@@ -1,13 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Este archivo está sujeto a los términos y condiciones del contrato de licencia incluido en el software que lo acompaña.
  */
 package controlador;
 
-/**
- *
- * @author ESTIMADO USUARIO
- */
 import conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,8 +11,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import modelo.Cliente;
 
+/**
+ * Clase que controla las operaciones relacionadas con los clientes en la base de datos.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
+ */
 public class Ctrl_Cliente {
     
+    /**
+     * Método para guardar un cliente en la base de datos.
+     * 
+     * @param objeto El objeto Cliente a guardar.
+     * @return true si el cliente se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(Cliente objeto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -43,6 +50,12 @@ public class Ctrl_Cliente {
         return respuesta;
     }
     
+    /**
+     * Método para verificar si un cliente ya existe en la base de datos.
+     * 
+     * @param cliente El número de identidad del cliente a verificar.
+     * @return true si el cliente existe, false en caso contrario.
+     */
     public boolean existeCliente(String cliente){
         boolean respuesta = false;
         String sql = "select NIdentidad from clientes where NIdentidad = '" + cliente + "';";
@@ -61,6 +74,13 @@ public class Ctrl_Cliente {
         return respuesta;
     }
         
+    /**
+     * Método para actualizar un cliente en la base de datos.
+     * 
+     * @param objeto El objeto Cliente con los datos actualizados.
+     * @param idcliente El ID del cliente a actualizar.
+     * @return true si la actualización se realiza correctamente, false en caso contrario.
+     */
     public boolean actualizar(Cliente objeto, int idcliente){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -86,6 +106,12 @@ public class Ctrl_Cliente {
         return respuesta;
     }
     
+    /**
+     * Método para eliminar un cliente de la base de datos.
+     * 
+     * @param idcliente El ID del cliente a eliminar.
+     * @return true si el cliente se elimina correctamente, false en caso contrario.
+     */
     public boolean eliminar(int idcliente){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();

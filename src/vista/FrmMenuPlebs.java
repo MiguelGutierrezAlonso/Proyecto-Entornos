@@ -10,16 +10,23 @@ import javax.swing.JDesktopPane;
 import modelo.Listado;
 import static vista.FrmMenu.jDesktopPane_menu;
 
-/**
- *
- * @author ESTIMADO USUARIO
- */
 
+/**
+ * Esta clase representa la ventana principal del sistema, que proporciona
+ * acceso a diferentes funcionalidades.
+ *
+ * @author Miguel
+ * @since 2024-06-07
+ */
 public class FrmMenuPlebs extends javax.swing.JFrame {
     
-    public static JDesktopPane jDesktopPane_menu;
     /**
-     * Creates new form FrmMenuPlebs
+     * Panel de escritorio para gestionar las ventanas internas.
+     */
+    public static JDesktopPane jDesktopPane_menu;
+    
+    /**
+     * Crea una nueva instancia de FrmMenu.
      */
     public FrmMenuPlebs() {
         initComponents();

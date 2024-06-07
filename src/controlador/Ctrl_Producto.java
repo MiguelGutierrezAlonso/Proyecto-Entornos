@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Este archivo está sujeto a los términos y condiciones del contrato de licencia incluido en el software que lo acompaña.
  */
 package controlador;
 
@@ -13,11 +12,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
- * @author ESTIMADO USUARIO
+ * Clase que controla las operaciones relacionadas con los productos en la base de datos.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class Ctrl_Producto {
     
+    /**
+     * Método para guardar un producto en la base de datos.
+     * 
+     * @param objeto El objeto Producto a guardar.
+     * @return true si el producto se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(Producto objeto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -44,6 +51,12 @@ public class Ctrl_Producto {
         return respuesta;
     }
     
+    /**
+     * Método para verificar si un producto ya existe en la base de datos.
+     * 
+     * @param producto El nombre del producto a verificar.
+     * @return true si el producto existe, false en caso contrario.
+     */
     public boolean existeProducto(String producto){
         boolean respuesta = false;
         String sql = "select nombre from productos where nombre = '" + producto + "';";
@@ -61,6 +74,14 @@ public class Ctrl_Producto {
         }
         return respuesta;
     }
+    
+    /**
+     * Método para actualizar un producto en la base de datos.
+     * 
+     * @param objeto El objeto Producto con los datos actualizados.
+     * @param idproducto El ID del producto a actualizar.
+     * @return true si la actualización se realiza correctamente, false en caso contrario.
+     */
     public boolean actualizar(Producto objeto, int idproducto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -86,6 +107,13 @@ public class Ctrl_Producto {
 
         return respuesta;
     }
+    
+    /**
+     * Método para eliminar un producto de la base de datos.
+     * 
+     * @param idproducto El ID del producto a eliminar.
+     * @return true si el producto se elimina correctamente, false en caso contrario.
+     */
     public boolean eliminar(int idproducto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -106,12 +134,19 @@ public class Ctrl_Producto {
         return respuesta;
     }
     
-    public boolean actualizarStock(Producto object, int idProducto){
+    /**
+     * Método para actualizar el stock de un producto en la base de datos.
+     * 
+     * @param objeto El objeto Producto con la cantidad actualizada.
+     * @param idProducto El ID del producto cuyo stock se actualizará.
+     * @return true si la actualización del stock se realiza correctamente, false en caso contrario.
+     */
+    public boolean actualizarStock(Producto objeto, int idProducto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
         try{
             PreparedStatement consulta = cn.prepareStatement("update productos set cantidad=? where id_producto = '" + idProducto + "'");
-            consulta.setInt(1, object.getCantidad());
+            consulta.setInt(1, objeto.getCantidad());
             
             if(consulta.executeUpdate() > 0){
                 respuesta = true;

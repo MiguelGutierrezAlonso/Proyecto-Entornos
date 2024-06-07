@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Este archivo está sujeto a los términos y condiciones del contrato de licencia incluido en el software que lo acompaña.
  */
 package controlador;
 
@@ -13,11 +12,30 @@ import java.sql.Statement;
 import modelo.CabeceraVenta;
 import modelo.DetalleVenta;
 
+/**
+ * Clase que controla el registro de ventas en la base de datos.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
+ */
 public class Ctrl_RegistrarVenta {
     
+    /**
+     * Variable estática para almacenar el ID de la cabecera registrada.
+     */
     public static int idCabeceraRegistrada;
+    
+    /**
+     * Objeto BigDecimal utilizado para obtener el ID generado por la base de datos.
+     */
     java.math.BigDecimal iDColVar;
     
+    /**
+     * Método para guardar la cabecera de una venta en la base de datos.
+     * 
+     * @param objeto El objeto CabeceraVenta a guardar.
+     * @return true si la cabecera se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(CabeceraVenta objeto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();
@@ -48,6 +66,13 @@ public class Ctrl_RegistrarVenta {
         
         return respuesta;
     }
+    
+    /**
+     * Método para guardar los detalles de una venta en la base de datos.
+     * 
+     * @param objeto El objeto DetalleVenta a guardar.
+     * @return true si los detalles se guardan correctamente, false en caso contrario.
+     */
     public boolean guardarDetalle(DetalleVenta objeto){
         boolean respuesta = false;
         Connection cn = Conexion.conectar();

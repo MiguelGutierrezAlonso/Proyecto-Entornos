@@ -22,13 +22,21 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Esta clase representa la interfaz de gestión de empleados en el sistema.
+ * Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre
+ * los datos de los empleados. La interfaz proporciona campos para mostrar y
+ * editar la información de los empleados, así como botones para actualizar,
+ * eliminar y buscar empleados en la base de datos.
  *
- * @author ESTIMADO USUARIO
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterGestEmpleado extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form InterGestEmpleado
+     * Crea una nueva instancia de la interfaz de gestión de empleados.
+     * Inicializa la interfaz gráfica y establece el tamaño, título y color de
+     * fondo.
      */
     public InterGestEmpleado() {
         initComponents();
@@ -185,6 +193,15 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Realiza una actualización de los datos del empleado en la base de datos.
+     * Este método se activa al hacer clic en el botón "Actualizar" en la
+     * interfaz. Verifica la validez de los datos ingresados y actualiza la
+     * información del empleado.
+     *
+     * @param evt Evento que desencadena la acción (en este caso, un clic en el
+     * botón "Actualizar").
+     */
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
 
         // Verificar si todos los campos están llenos
@@ -249,6 +266,14 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_UpdateActionPerformed
 
+    /**
+     * Elimina un empleado de la base de datos. Este método se activa al hacer
+     * clic en el botón "Eliminar" en la interfaz. Se solicita confirmación al
+     * usuario antes de realizar la eliminación.
+     *
+     * @param evt Evento que desencadena la acción (en este caso, un clic en el
+     * botón "Eliminar").
+     */
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         if (!EID.getText().isEmpty()) {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
@@ -281,10 +306,24 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_DeleteActionPerformed
 
+    /**
+     * Maneja el evento de selección/deselección del checkbox "Admin".
+     * Actualmente no implementado.
+     *
+     * @param evt Evento que desencadena la acción (en este caso, un clic en el
+     * checkbox "Admin").
+     */
     private void EAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EAdminActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EAdminActionPerformed
 
+    /**
+     * Realiza una búsqueda de un empleado por su número de identidad. Este
+     * método se activa al hacer clic en el botón "Buscar" en la interfaz.
+     *
+     * @param evt Evento que desencadena la acción (en este caso, un clic en el
+     * botón "Buscar").
+     */
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         String identityNumber = EID.getText();
         if (!identityNumber.isEmpty()) {
@@ -331,6 +370,12 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
     double sueldo = 0;
     String direccion = "";
 
+    /**
+     * Carga los datos de los usuarios desde la base de datos y los muestra en
+     * la tabla de la interfaz. Este método se encarga de realizar la consulta a
+     * la base de datos para obtener la información de los usuarios y luego
+     * cargarla en la tabla de la interfaz gráfica.
+     */
     private void CargarTablaUsuarios() {
         Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
@@ -387,6 +432,14 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
         });
     }
 
+    /**
+     * Envía los datos del usuario seleccionado a los campos de la interfaz para
+     * su visualización y edición. Este método recibe el ID del usuario
+     * seleccionado, realiza una consulta a la base de datos para obtener sus
+     * datos y luego los muestra en los campos correspondientes de la interfaz.
+     *
+     * @param idusuario ID del usuario seleccionado.
+     */
     private void EnviarDatosUsuarioSeleccionado(int idusuario) {
         try {
             Connection con = Conexion.conectar();
@@ -412,6 +465,15 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Envía los datos de un usuario identificado por su número de identidad a
+     * los campos de la interfaz. Este método realiza una búsqueda en la base de
+     * datos utilizando el número de identidad proporcionado como parámetro y
+     * muestra los datos del usuario correspondiente en los campos de la
+     * interfaz.
+     *
+     * @param idusuario Número de identidad del usuario a buscar.
+     */
     private void EnviarDatosDNIMarcado(String idusuario) {
         try {
             Connection con = Conexion.conectar();
@@ -438,6 +500,12 @@ public class InterGestEmpleado extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Limpia todos los campos de la interfaz. Este método se utiliza para
+     * restablecer todos los campos de entrada de la interfaz a su estado
+     * inicial, eliminando cualquier texto o valor que pudiera estar presente en
+     * ellos.
+     */
     private void LimpiarCampos() {
         EID.setText("");
         ENombre.setText("");

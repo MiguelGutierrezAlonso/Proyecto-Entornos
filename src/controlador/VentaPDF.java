@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controlador;
 
-/**
- *
- * @author ESTIMADO USUARIO
- */
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -21,19 +13,24 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import conexion.Conexion;
+import vista.InterFactura;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import vista.InterFactura;
-import java.sql.*;
 
+/**
+ * Clase para generar el PDF de la factura de venta.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
+ */
 public class VentaPDF {
     
     private String nombreCliente;
@@ -44,13 +41,17 @@ public class VentaPDF {
     private String fechaActual = "";
     private String nombreArchivoPDFVenta = "";
     
+    /**
+     * Método para obtener los datos del cliente.
+     * 
+     * @param idCliente El ID del cliente del cual se obtendrán los datos.
+     */
     public void DatosCliente(int idCliente){
         Connection cn = Conexion.conectar();
         String sql = "select * from clientes where id_cliente = '" + idCliente + "'";
-        Statement st;
         try{
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            PreparedStatement st = cn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
             while(rs.next()){
                 nombreCliente = rs.getString("nombre") + " " + rs.getString("apellido");
                 nICliente = rs.getString("NIdentidad");
@@ -63,20 +64,15 @@ public class VentaPDF {
         }
     }
     
+    /**
+     * Método para generar el PDF de la factura de venta.
+     */
     public void generarFacturaPDF(){
         try{
-            
             Date date = new Date();
             fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
             
-            String fechaNueva = "";
-            for(int i = 0; i < fechaActual.length(); i++){
-                if(fechaActual.charAt(i) == '/'){
-                    fechaNueva = fechaActual.replace("/", "_");
-                    
-                }
-            }
-            
+            String fechaNueva = fechaActual.replace("/", "_");
             nombreArchivoPDFVenta = "Order_" + nombreCliente + "_" + fechaNueva + ".pdf";
             
             FileOutputStream archivo;
@@ -90,20 +86,19 @@ public class VentaPDF {
             int idVenta = 0;
             
             try{
-            String sql = "SELECT MAX(id_pedido) FROM ventas";
-            Connection conn = Conexion.conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                idVenta = rs.getInt(1);
-            }
-            rs.close();
-            pstmt.close();
-            conn.close();
+                String sql = "SELECT MAX(id_pedido) FROM ventas";
+                Connection conn = Conexion.conectar();
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    idVenta = rs.getInt(1);
+                }
+                rs.close();
+                pstmt.close();
+                conn.close();
             }catch(SQLException e){
-                
+                System.out.println("Error al obtener el ID de venta máximo: " + e);
             }
-            
             
             Image img = Image.getInstance("src/img/ImagenCarniceria.png");
             Paragraph fecha = new Paragraph();
@@ -120,14 +115,8 @@ public class VentaPDF {
             Encabezado.setHorizontalAlignment(Element.ALIGN_LEFT);
             
             Encabezado.addCell(img);
-            
-            String nempresa = "G83475834M";
-            String nombre = "Gutierrez Meats";
-            String telefono = "677777777";
-            String direccion = "Valladolid city";
-            
             Encabezado.addCell("");
-            Encabezado.addCell("FIN: " + nempresa + "\nComapny: " + nombre + "\nTlf: "+ telefono + "\nAddress: " + direccion);
+            Encabezado.addCell("FIN: G83475834M\nComapny: Gutierrez Meats\nTlf: 677777777\nAddress: Valladolid city");
             Encabezado.addCell(fecha);
             doc.add(Encabezado);
             
@@ -207,7 +196,6 @@ public class VentaPDF {
                 tablaProducto.addCell(producto);
                 tablaProducto.addCell(precio);
                 tablaProducto.addCell(total);
-                
             }
             
             doc.add(tablaProducto);
@@ -241,9 +229,9 @@ public class VentaPDF {
             
             Desktop.getDesktop().open(file);
             
-        }catch(DocumentException | IOException e){
+        } catch(DocumentException | IOException e) {
             System.out.println("Error en: " + e);
         }
     }
-    
 }
+ 

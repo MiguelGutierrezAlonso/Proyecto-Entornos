@@ -21,14 +21,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
- *
- * @author ESTIMADO USUARIO
+ * La clase InterGestProveedor gestiona la interfaz de usuario para el manejo de proveedores.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterGestProveedor extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form InterGestProveedor
+     * Constructor de la clase InterGestProveedor.
      */
     public InterGestProveedor() {
         initComponents();
@@ -133,6 +136,11 @@ public class InterGestProveedor extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_SCompanyActionPerformed
 
+    /**
+     * Actualiza la información del proveedor.
+     * 
+     * @param evt Evento de acción del botón
+     */
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         if (SCompany.getText().trim().isEmpty()
                 || STlf.getText().trim().isEmpty()
@@ -169,7 +177,11 @@ public class InterGestProveedor extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_UpdateActionPerformed
-
+    /**
+     * Busca información de un proveedor.
+     * 
+     * @param evt Evento de acción del botón
+     */
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         String identityNumber = SCompany.getText();
         if (!identityNumber.isEmpty()) {
@@ -199,6 +211,9 @@ public class InterGestProveedor extends javax.swing.JInternalFrame {
     String telefono = "";
     String direccion = "";
 
+    /**
+     * Carga la tabla de proveedores.
+     */
     private void CargarTablaProveedores() {
         Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
@@ -247,6 +262,11 @@ public class InterGestProveedor extends javax.swing.JInternalFrame {
         });
     }
 
+    /**
+     * Envía los datos del proveedor seleccionado.
+     * 
+     * @param idproveedor Identificador del proveedor seleccionado
+     */
     private void EnviarDatosProveedorSeleccionado(int idproveedor) {
         try {
             Connection con = Conexion.conectar();
@@ -265,6 +285,11 @@ public class InterGestProveedor extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Envía los datos de la empresa marcada.
+     * 
+     * @param idproveedor Identificador de la empresa marcada
+     */
     private void EnviarDatosEmpresaMarcada(String idproveedor) {
         try {
             Connection con = Conexion.conectar();
@@ -287,6 +312,9 @@ public class InterGestProveedor extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Limpia los campos de texto.
+     */
     private void LimpiarCampos() {
         SCompany.setText("");
         STlf.setText("");

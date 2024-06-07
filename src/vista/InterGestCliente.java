@@ -22,13 +22,17 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Clase que representa la interfaz de gestión de clientes. Permite realizar
+ * operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la base de datos
+ * de clientes.
  *
- * @author ESTIMADO USUARIO
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterGestCliente extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form InterGestCliente
+     * Crea un nuevo formulario InterGestCliente
      */
     public InterGestCliente() {
         initComponents();
@@ -151,6 +155,12 @@ public class InterGestCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Actualizar". Actualiza
+     * los datos del cliente en la base de datos.
+     *
+     * @param evt Evento de acción generado por el botón "Actualizar".
+     */
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
 
         if (CNI.getText().trim().isEmpty()
@@ -199,6 +209,12 @@ public class InterGestCliente extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_UpdateActionPerformed
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Eliminar". Elimina un
+     * cliente de la base de datos.
+     *
+     * @param evt Evento de acción generado por el botón "Eliminar".
+     */
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         if (!CNI.getText().isEmpty()) {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this client?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
@@ -232,6 +248,12 @@ public class InterGestCliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_DeleteActionPerformed
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Buscar". Busca un
+     * cliente por su identificador (DNI) y muestra sus datos.
+     *
+     * @param evt Evento de acción generado por el botón "Buscar".
+     */
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         String identityNumber = CNI.getText();
         if (!identityNumber.isEmpty()) {
@@ -268,6 +290,10 @@ public class InterGestCliente extends javax.swing.JInternalFrame {
     String telefono = "";
     String direccion = "";
 
+    /**
+     * Método para cargar la tabla de clientes con los datos de la base de
+     * datos.
+     */
     private void CargarTablaClientes() {
         Connection con = Conexion.conectar();
         DefaultTableModel model = new DefaultTableModel();
@@ -317,6 +343,12 @@ public class InterGestCliente extends javax.swing.JInternalFrame {
         });
     }
 
+    /**
+     * Método para enviar los datos del cliente seleccionado a los campos de
+     * texto.
+     *
+     * @param idcliente Identificador del cliente seleccionado.
+     */
     private void EnviarDatosClienteSeleccionado(int idcliente) {
         try {
             Connection con = Conexion.conectar();
@@ -337,6 +369,12 @@ public class InterGestCliente extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Método para enviar los datos de un cliente encontrado por su DNI a los
+     * campos de texto.
+     *
+     * @param idcliente DNI del cliente a buscar.
+     */
     private void EnviarDatosDNIMarcado(String idcliente) {
         try {
             Connection con = Conexion.conectar();

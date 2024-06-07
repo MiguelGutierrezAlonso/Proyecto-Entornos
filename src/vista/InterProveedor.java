@@ -12,13 +12,20 @@ import javax.swing.JOptionPane;
 import modelo.Proveedor;
 
 /**
- *
- * @author ESTIMADO USUARIO
+ * Esta clase proporciona una interfaz gráfica para agregar nuevos proveedores al sistema.
+ * Permite al usuario ingresar información como nombre de la empresa, número de teléfono y dirección del proveedor.
+ * Una vez ingresada la información, el usuario puede enviarla para su almacenamiento en la base de datos.
+ * Si algún campo está vacío o si el proveedor ya existe en la base de datos, se mostrará un mensaje de error correspondiente.
+ * Además, proporciona un método para limpiar los campos de entrada después de enviar la información.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterProveedor extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form InterProveedor
+     * Crea una nueva instancia de InterProveedor.
+     * Inicializa los componentes de la interfaz gráfica y establece el título y tamaño de la ventana.
      */
     public InterProveedor() {
         initComponents();
@@ -90,6 +97,14 @@ public class InterProveedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método invocado cuando se hace clic en el botón "Submit".
+     * Recoge la información ingresada por el usuario, valida los campos y guarda el proveedor en la base de datos.
+     * Muestra mensajes de error si algún campo está vacío, si el número de teléfono no es válido o si el proveedor ya existe.
+     * Además, limpia los campos de entrada después de guardar la información.
+     * 
+     * @param evt El evento de acción que desencadena este método (clic en el botón "Submit").
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Proveedor proveedor = new Proveedor();
     Ctrl_Proveedor controlProveedor = new Ctrl_Proveedor();
@@ -153,6 +168,10 @@ public class InterProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Limpia los campos de entrada en la interfaz gráfica.
+     * Esto se realiza después de guardar la información del proveedor para permitir al usuario ingresar un nuevo proveedor.
+     */
     private void Limpiar(){
         SEmpresa.setText("");
         STlf.setText("");

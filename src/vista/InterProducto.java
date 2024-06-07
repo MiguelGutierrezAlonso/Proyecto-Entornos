@@ -17,8 +17,10 @@ import javax.swing.JOptionPane;
 import modelo.Producto;
 
 /**
- *
- * @author ESTIMADO USUARIO
+ * Esta clase representa una interfaz para agregar un nuevo producto.
+ * 
+ * @author Miguel
+ * @since 2024-06-07
  */
 public class InterProducto extends javax.swing.JInternalFrame {
 
@@ -27,6 +29,9 @@ public class InterProducto extends javax.swing.JInternalFrame {
      */
     int obtenerProveedor = 0;
 
+    /**
+     * Constructor de la clase InterProducto.
+     */
     public InterProducto() {
         initComponents();
         this.setTitle("New Producto");
@@ -164,6 +169,14 @@ public class InterProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreActionPerformed
 
+    /**
+     * Maneja el evento de clic en el botón Submit. Este método guarda la
+     * información del producto en la base de datos si todos los campos están
+     * llenos y son válidos. También verifica si el producto ya existe en la
+     * base de datos.
+     *
+     * @param evt El evento de acción que desencadena este método.
+     */
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
 
         Producto producto = new Producto();
@@ -280,6 +293,9 @@ public class InterProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField nombre;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Método para limpiar todos los campos del formulario.
+     */
     private void Limpiar() {
         nombre.setText("");
         cantidad.setText("");
@@ -287,6 +303,9 @@ public class InterProducto extends javax.swing.JInternalFrame {
         PrecioV.setText("");
     }
 
+    /**
+     * Método para cargar los proveedores en un JComboBox.
+     */
     private void CargarProveedor() {
         Connection cn = Conexion.conectar();
         String sql = "select * from proveedores";
@@ -308,6 +327,11 @@ public class InterProducto extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Método para obtener el ID del proveedor seleccionado.
+     *
+     * @return El ID del proveedor seleccionado.
+     */
     private int idProveedor() {
         String sql = "select * from proveedores where empresa = '" + this.PProveedor.getSelectedItem() + "'";
         Statement st;
